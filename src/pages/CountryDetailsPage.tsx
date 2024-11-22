@@ -6,8 +6,10 @@ import { fetchWeather } from '../utils/fetchWeather';
 const CountryDetailsPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();
   const navigate = useNavigate();
+  const country = useAppSelector((state) =>
+    state.country.allCountries.find((c) => c.name.toLowerCase() === name?.toLowerCase())
+  );
 
-  const [country, setCountry] = useState<any | null>(null); // Local state to handle country details on refresh
   const [weather, setWeather] = useState<any | null>(null);
   const [weatherLoading, setWeatherLoading] = useState(true);
   const [weatherError, setWeatherError] = useState<string | null>(null);
@@ -15,32 +17,6 @@ const CountryDetailsPage: React.FC = () => {
   const [additionalData, setAdditionalData] = useState<any | null>(null);
   const [additionalLoading, setAdditionalLoading] = useState(true);
   const [additionalError, setAdditionalError] = useState<string | null>(null);
-
-  const reduxCountry = useAppSelector((state) =>
-    state.country.allCountries.find((c) => c.name.toLowerCase() === name?.toLowerCase())
-  );
-
-  // Fetch country details dynamically if not found in Redux
-  useEffect(() => {
-    if (reduxCountry) {
-      setCountry(reduxCountry);
-    } else if (name) {
-      fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
-        .then((response) => {
-          if (!response.ok) throw new Error('Failed to fetch country details.');
-          return response.json();
-        })
-        .then((data) => {
-          if (Array.isArray(data) && data.length > 0) {
-            setCountry(data[0]);
-          } else {
-            throw new Error('No data found for the given country.');
-          }
-        })
-        .catch(() => setAdditionalError('Failed to load country details.'))
-        .finally(() => setAdditionalLoading(false));
-    }
-  }, [name, reduxCountry]);
 
   // Fetch weather data
   useEffect(() => {
@@ -78,8 +54,7 @@ const CountryDetailsPage: React.FC = () => {
     }
   }, [name]);
 
-  if (!country && additionalLoading) return <p>Loading country details...</p>;
-  if (!country && additionalError) return <p>{additionalError}</p>;
+  if (!country) return <p>Country not found. Please check the URL.</p>;
 
   return (
     <div style={{ padding: '20px' }}>
@@ -99,34 +74,26 @@ const CountryDetailsPage: React.FC = () => {
       </button>
 
       <img
-        src={`https://flagcdn.com/w320/${additionalData?.cca2?.toLowerCase() || country?.code?.toLowerCase()}.png`}
-        alt={`${country?.name?.common || country?.name} flag`}
+        src={`https://flagcdn.com/w320/${country.code.toLowerCase()}.png`}
+        alt={`${country.name} flag`}
         style={{
           width: '150px',
           display: 'block',
           margin: '20px auto',
-          padding: '10px',
-          border: '2px solid #ccc',
-          borderRadius: '8px',
-          backgroundColor: '#f9f9f9',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          padding: '10px', // Add padding around the flag
+          border: '2px solid #ccc', // Add a border to create a frame
+          borderRadius: '8px', // Optional: round the corners of the frame
+          backgroundColor: '#f9f9f9', // Optional: light background color for the frame
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Optional: subtle shadow for a modern look
         }}
       />
 
 
-      <h1>{country?.name?.common}</h1>
-      <p><strong>Capital:</strong> {country?.capital?.[0] || 'N/A'}</p>
+      <h1>{country.name}</h1>
+      <p><strong>Capital:</strong> {country.capital || 'N/A'}</p>
       <p><strong>Region:</strong> {additionalData?.region || 'N/A'}</p>
-      <p>
-        <strong>Languages:</strong>{' '}
-        {country?.languages ? Object.values(country.languages).join(', ') : 'N/A'}
-      </p>
-      <p>
-        <strong>Currencies:</strong>{' '}
-        {country?.currencies
-          ? Object.values(country.currencies).map((currency: any) => currency.name).join(', ')
-          : 'N/A'}
-      </p>
+      <p><strong>Languages:</strong> {country.languages.map((lang: any) => lang.name).join(', ')}</p>
+      <p><strong>Currencies:</strong> {country.currencies?.join(', ') || 'N/A'}</p>
 
       {additionalLoading ? (
         <p>Loading additional details...</p>
@@ -146,7 +113,7 @@ const CountryDetailsPage: React.FC = () => {
       )}
 
       <div style={{ marginTop: '30px' }}>
-        <h2>Weather in {country?.capital?.[0]}</h2>
+        <h2>Weather in {country.capital}</h2>
         {weatherLoading ? (
           <p>Loading weather data...</p>
         ) : weatherError ? (
