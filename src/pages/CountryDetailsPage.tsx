@@ -76,8 +76,18 @@ const CountryDetailsPage: React.FC = () => {
       <img
         src={`https://flagcdn.com/w320/${country.code.toLowerCase()}.png`}
         alt={`${country.name} flag`}
-        style={{ width: '150px', display: 'block', margin: '0 auto 20px' }}
+        style={{
+          width: '150px',
+          display: 'block',
+          margin: '20px auto',
+          padding: '10px', // Add padding around the flag
+          border: '2px solid #ccc', // Add a border to create a frame
+          borderRadius: '8px', // Optional: round the corners of the frame
+          backgroundColor: '#f9f9f9', // Optional: light background color for the frame
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Optional: subtle shadow for a modern look
+        }}
       />
+
 
       <h1>{country.name}</h1>
       <p><strong>Capital:</strong> {country.capital || 'N/A'}</p>
