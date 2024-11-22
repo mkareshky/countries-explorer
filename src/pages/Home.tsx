@@ -16,7 +16,7 @@ const Home: React.FC = () => {
     onError: (err) => {
       console.error('Error loading countries:', err.message);
     },
-  });  
+  });
 
   useEffect(() => {
     if (data) {
@@ -25,7 +25,7 @@ const Home: React.FC = () => {
   }, [data, dispatch]);
 
   if (loading) return <p>Loading countries...</p>;
-  if (error) return <p>Error loading countries: {error.message}</p>;
+  if (error) return <p>Error loading countries: {error.message}. Please try refreshing the page.</p>;
 
   return (
     <div>
