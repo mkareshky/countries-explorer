@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  margin: 10px 0;
+  padding: 10px;
+}
+
+@media (min-width: 768px) {
+  .country-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .country-list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.country-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.country-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.country-card img {
+  width: 100%;
+  max-width: 150px;
+  margin: 0 auto;
+}

@@ -1,19 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import { createRoot } from 'react-dom/client'; // Updated import for React 18
+import { ApolloProvider } from '@apollo/client'; 
+import { Provider } from 'react-redux'; 
+import { store } from './store/store'; 
+import { client } from './graphql/apolloClient'; 
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './styles.css';
+import { BrowserRouter } from 'react-router-dom'; // Wrap the app in BrowserRouter
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = createRoot(document.getElementById('root')!); // Use createRoot
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ApolloProvider>
+    </Provider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
