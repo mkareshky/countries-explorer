@@ -4,11 +4,11 @@ import { useAppSelector } from '../store/hooks';
 import { fetchWeather } from '../utils/fetchWeather';
 
 const CountryDetailsPage: React.FC = () => {
-  const { name } = useParams<{ name: string }>();
+  const { code } = useParams<{ code: string }>(); // Use `code` instead of `name`
   const navigate = useNavigate();
 
   const reduxCountry = useAppSelector((state) =>
-    state.country.allCountries.find((c) => c.name.toLowerCase() === name?.toLowerCase())
+    state.country.allCountries.find((c) => c.code.toLowerCase() === code?.toLowerCase())
   );
 
   // Local state for country, weather, and loading/error
@@ -26,18 +26,18 @@ const CountryDetailsPage: React.FC = () => {
           setWeatherError(null);
         })
         .catch(() => {
-          setWeatherError("Failed to fetch weather data.");
+          setWeatherError('Failed to fetch weather data.');
         });
     } else {
-      setWeatherError("No capital available for weather data.");
+      setWeatherError('No capital available for weather data.');
     }
   }, [country]);
 
   // Fetch country details on refresh
   useEffect(() => {
-    if (name) {
+    if (code) {
       setLoading(true);
-      fetch(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
+      fetch(`https://restcountries.com/v3.1/alpha/${code}`) // Correct endpoint for `code`
         .then((response) => {
           if (!response.ok) throw new Error("Failed to fetch country details.");
           return response.json();
@@ -51,49 +51,50 @@ const CountryDetailsPage: React.FC = () => {
             throw new Error("No country data found.");
           }
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error(error.message);
           setCountry(null);
         })
         .finally(() => setLoading(false));
     }
-  }, [name]);
+  }, [code]);
 
 
-
+  
 
   // Helper functions for formatting
   const getLanguages = (languagesObj: Record<string, string>): string =>
-    languagesObj ? Object.values(languagesObj).join(", ") : "N/A";
+    languagesObj ? Object.values(languagesObj).join(', ') : 'N/A';
 
   const getCurrencies = (currenciesObj: Record<string, any>): string =>
     currenciesObj
       ? Object.keys(currenciesObj)
-        .map((key) => currenciesObj[key]?.name || key)
-        .join(", ")
-      : "N/A";
+          .map((key) => currenciesObj[key]?.name || key)
+          .join(', ')
+      : 'N/A';
 
-  const flagUrl =
-    country?.flags?.png ||
-    (country?.cca2
-      ? `https://flagcdn.com/w320/${country.code.toLowerCase()}.png`
-      : null);
+      const flagUrl =
+      country?.flags?.png ||
+      (country?.cca2
+        ? `https://flagcdn.com/w320/${country.code.toLowerCase()}.png`
+        : null);
 
   // Loading state
   if (loading) return <p>Loading country details...</p>;
   if (!country) return <p>Country not found. Please check the URL.</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: '20px' }}>
       <button
         onClick={() => navigate(-1)}
         style={{
-          marginBottom: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#007BFF",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
+          marginBottom: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#007BFF',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
         }}
       >
         Back
@@ -102,64 +103,64 @@ const CountryDetailsPage: React.FC = () => {
       {flagUrl ? (
         <img
           src={flagUrl}
-          alt={`${country?.name?.common || "Country"} flag`}
+          alt={`${country?.name?.common || 'Country'} flag`}
           style={{
-            width: "150px",
-            display: "block",
-            margin: "20px auto",
-            padding: "10px",
-            border: "2px solid #ccc",
-            borderRadius: "8px",
-            backgroundColor: "#f9f9f9",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            width: '150px',
+            display: 'block',
+            margin: '20px auto',
+            padding: '10px',
+            border: '2px solid #ccc',
+            borderRadius: '8px',
+            backgroundColor: '#f9f9f9',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           }}
         />
       ) : (
         <div
           style={{
-            width: "150px",
-            height: "100px",
-            margin: "20px auto",
-            backgroundColor: "#ccc",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "8px",
+            width: '150px',
+            height: '100px',
+            margin: '20px auto',
+            backgroundColor: '#ccc',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: '8px',
           }}
         >
           No Flag
         </div>
       )}
 
-      <h1>{country?.name?.common || "N/A"}</h1>
+      <h1>{country?.name?.common || 'N/A'}</h1>
       <p>
-        <strong>Capital:</strong> {country?.capital?.[0] || "N/A"}
+        <strong>Capital:</strong> {country?.capital?.[0] || 'N/A'}
       </p>
       <p>
-        <strong>Region:</strong> {country?.region || "N/A"}
+        <strong>Region:</strong> {country?.region || 'N/A'}
       </p>
       <p>
-        <strong>Languages:</strong>{" "}
-        {country?.languages ? getLanguages(country.languages) : "N/A"}
+        <strong>Languages:</strong>{' '}
+        {country?.languages ? getLanguages(country.languages) : 'N/A'}
       </p>
       <p>
-        <strong>Currencies:</strong>{" "}
-        {country?.currencies ? getCurrencies(country.currencies) : "N/A"}
+        <strong>Currencies:</strong>{' '}
+        {country?.currencies ? getCurrencies(country.currencies) : 'N/A'}
       </p>
       <p>
-        <strong>Population:</strong>{" "}
-        {country?.population ? country.population.toLocaleString() : "N/A"}
+        <strong>Population:</strong>{' '}
+        {country?.population ? country.population.toLocaleString() : 'N/A'}
       </p>
       <p>
-        <strong>Timezones:</strong> {country?.timezones?.join(", ") || "N/A"}
+        <strong>Timezones:</strong> {country?.timezones?.join(', ') || 'N/A'}
       </p>
       <p>
-        <strong>Neighboring Countries:</strong>{" "}
-        {country?.borders?.join(", ") || "None"}
+        <strong>Neighboring Countries:</strong>{' '}
+        {country?.borders?.join(', ') || 'None'}
       </p>
 
-      <div style={{ marginTop: "30px" }}>
-        <h2>Weather in {country?.capital || "this region"}</h2>
+      <div style={{ marginTop: '30px' }}>
+        <h2>Weather in {country?.capital || 'this region'}</h2>
         {weatherError ? (
           <p>{weatherError}</p>
         ) : weather ? (

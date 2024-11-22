@@ -19,7 +19,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country }) => {
 
   return (
     <div
-      onClick={() => navigate(`/country/${country.name}`)}
+      onClick={() => navigate(`/country/${country.code}`)} // Use `code` here
       style={{
         border: '1px solid #ccc',
         borderRadius: '8px',

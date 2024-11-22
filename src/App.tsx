@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'; // Removed Router import
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import CountryDetailsPage from './pages/CountryDetailsPage';
 
@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/country/:name" element={<CountryDetailsPage />} />
+        <Route path="/country/:code" element={<CountryDetailsPage />} /> {/* Updated to use `code` */}
       </Routes>
     </>
   );
