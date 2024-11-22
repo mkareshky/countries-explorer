@@ -27,7 +27,8 @@ const FilterAndSort: React.FC = () => {
         <select value={filters.region || 'All'} onChange={handleRegionChange}>
           <option value="All">All</option>
           <option value="Africa">Africa</option>
-          <option value="Americas">Americas</option>
+          <option value="North America">North America</option>
+          <option value="South America">South America</option>
           <option value="Asia">Asia</option>
           <option value="Europe">Europe</option>
           <option value="Oceania">Oceania</option>

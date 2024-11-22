@@ -8,7 +8,7 @@ const CountryList: React.FC = () => {
 
     // Apply region filter
     const filteredByRegion = filters.region
-      ? countries.filter((country) => country.continent.name === filters.region)
+      ? countries.filter((country) => country.continent.name.toLowerCase() === filters.region.toLowerCase())
       : countries;
 
     // Apply sorting
