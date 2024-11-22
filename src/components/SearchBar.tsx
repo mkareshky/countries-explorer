@@ -4,7 +4,7 @@ import { setCountries } from '../store/countrySlice';
 
 const SearchBar: React.FC = () => {
   const [query, setQuery] = useState('');
-  const allCountries = useAppSelector((state) => state.country.allCountries || []);
+  const allCountries = useAppSelector((state) => state.country.allCountries);
   const dispatch = useAppDispatch();
 
   const handleSearch = () => {
@@ -14,16 +14,21 @@ const SearchBar: React.FC = () => {
     dispatch(setCountries(filteredCountries));
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent page reload on form submission
+    handleSearch(); // Trigger the search logic
+  };
+
   return (
-    <div>
+    <form onSubmit={handleKeyPress}>
       <input
         type="text"
         placeholder="Search by country name"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 
