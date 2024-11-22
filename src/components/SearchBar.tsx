@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setCountries } from '../store/countrySlice';
+import { Form, Input, Button } from './styles/SearchBar.styles';
 
 const SearchBar: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -20,15 +21,15 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleKeyPress}>
-      <input
+    <Form onSubmit={handleKeyPress}>
+      <Input
         type="text"
         placeholder="Search by country name"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button type="submit">Search</button>
-    </form>
+      <Button type="submit">Search</Button>
+    </Form>
   );
 };
 

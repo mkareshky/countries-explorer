@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setFilters, setSortBy } from '../store/countrySlice';
+import { Wrapper, Label } from './styles/FilterAndSort.styles';
 
 const FilterAndSort: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,8 +22,8 @@ const FilterAndSort: React.FC = () => {
   };
 
   return (
-    <div>
-      <label>
+    <Wrapper>
+      <Label>
         Filter by Region:
         <select value={filters.region || 'All'} onChange={handleRegionChange}>
           <option value="All">All</option>
@@ -33,16 +34,16 @@ const FilterAndSort: React.FC = () => {
           <option value="Europe">Europe</option>
           <option value="Oceania">Oceania</option>
         </select>
-      </label>
-      <label>
+      </Label>
+      <Label>
         Sort by:
         <select value={sortBy} onChange={handleSortChange}>
           <option value="name">Name</option>
           <option value="population">Population</option>
           <option value="area">Area</option>
         </select>
-      </label>
-    </div>
+      </Label>
+    </Wrapper>
   );
 };
 
