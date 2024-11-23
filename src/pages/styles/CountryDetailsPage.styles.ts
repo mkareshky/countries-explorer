@@ -36,7 +36,12 @@ export const CardContainer = styled.div`
 export const FlagImage = styled.img`
   width: 100%;
   max-width: 300px;
-  border-radius: 8px;
+  border-radius: 8px; 
+  border: 3px solid #ddd; 
+  background-color: #f9f9f9; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  padding: 10px; 
+  margin-top: 20px;
 `;
 
 export const CardContent = styled.div`
@@ -66,8 +71,8 @@ export const NeighborsContainer = styled.div`
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center buttons horizontally */
-  align-items: center; /* Center buttons vertically */
+  justify-content: center; 
+  align-items: center;
 
   button {
     margin: 5px;
