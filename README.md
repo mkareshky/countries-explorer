@@ -1,8 +1,5 @@
 
 
-Here is the expanded README file with the **Folder Structure** section added, maintaining all original content:
-
----
 
 # README
 
@@ -317,4 +314,3 @@ The application follows a **modular, component-based architecture** leveraging t
    - **Regret:** Limited focus on WCAG compliance for UI components.
    - **Next Steps:** Conduct an accessibility audit and update components to be screen-reader friendly and fully navigable via keyboard.
 
---- 
