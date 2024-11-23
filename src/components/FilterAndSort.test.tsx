@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import FilterAndSort from '../FilterAndSort';
+import FilterAndSort from './FilterAndSort';
 
 const mockStore = configureStore([]);
 const mockDispatch = jest.fn();

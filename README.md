@@ -30,11 +30,13 @@ Below is the key structure of the project with explanations for each part:
 ```
 src/
 ├── components/                   # Reusable UI components
-│   ├── __tests__/                # Unit tests for components
 │   ├── styles/                   # Styled-components for shared UI elements
 │   ├── CountryCard.tsx           # Displays a card for individual countries
+│   ├── CountryCard.test.tsx      # Unit test for CountryCard component
 │   ├── FilterAndSort.tsx         # Filtering and sorting functionality for country lists
+│   ├── FilterAndSort.test.tsx    # Unit test for FilterAndSort component
 │   ├── SearchBar.tsx             # Search bar for filtering country lists
+│   ├── SearchBar.test.tsx        # Unit test for SearchBar component
 │   └── WeatherInfo.tsx           # Weather information display for capitals
 ├── graphql/                      # GraphQL setup and queries
 │   ├── apolloClient.ts           # Apollo Client configuration for GraphQL API
@@ -42,17 +44,23 @@ src/
 ├── pages/                        # Main application pages
 │   ├── styles/                   # Styled-components for page-specific components
 │   ├── Home.tsx                  # Homepage displaying the country list
+│   ├── Home.test.tsx             # Unit test for Home page
 │   └── CountryDetailsPage.tsx    # Details page for individual countries
+│   └── CountryDetailsPage.test.tsx # Unit test for CountryDetailsPage
 ├── store/                        # Redux store and state management
 │   ├── countrySlice.ts           # Redux slice for managing country state
 │   ├── hooks.ts                  # Custom Redux hooks for ease of use
-│   └── store.ts                  # Store configuration for Redux Toolkit
+│   ├── store.ts                  # Store configuration for Redux Toolkit
+│   └── countrySlice.test.ts      # Unit test for Redux slice
 ├── utils/                        # Utility functions
-│   └── fetchWeather.ts           # Fetches weather data from OpenWeather API
+│   ├── fetchWeather.ts           # Fetches weather data from OpenWeather API
+│   └── fetchWeather.test.ts      # Unit test for fetchWeather utility
 ├── App.tsx                       # Main application entry point with routing
+├── App.test.tsx                  # Unit test for App component
 ├── index.tsx                     # Renders the React application
 ├── types.ts                      # Type definitions for the application
 ├── styles.css                    # Global CSS styles
+
 ```
 
 ### Key Highlights

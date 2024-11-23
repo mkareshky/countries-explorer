@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import CountryCard from '../CountryCard';
+import CountryCard from './CountryCard';
 
 const mockCountry = {
   name: 'United States',
