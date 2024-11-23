@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/country/:code" element={<CountryDetailsPage />} /> {/* Updated to use `code` */}
+        <Route path="/country/:code" element={<CountryDetailsPage />} /> 
       </Routes>
     </>
   );

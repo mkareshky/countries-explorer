@@ -16,9 +16,9 @@ const CountryList: React.FC = () => {
       if (sortBy === 'name') {
         return a.name.localeCompare(b.name);
       } else if (sortBy === 'population') {
-        return a.population - b.population; // Adjust for actual property
+        return a.population - b.population; 
       } else if (sortBy === 'area') {
-        return a.area - b.area; // Adjust for actual property
+        return a.area - b.area; 
       }
       return 0;
     });
